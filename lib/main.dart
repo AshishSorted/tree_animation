@@ -21,20 +21,20 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final List<Fruit> fruits = [
     Fruit('Apple', 400),
-    // Fruit('Orange'),
-    // Fruit('Banana'),
-    // Fruit('Grape'),
-    // Fruit('Watermelon'),
-    // Fruit('Strawberry'),
-    // Fruit('Pineapple'),
-    // Fruit('Mango'),
-    // Fruit('Cherry'),
-    // Fruit('Kiwi'),
-    // Fruit('Pear'),
-    // Fruit('Plum'),
-    // Fruit('Lemon'),
-    // Fruit('Peach'),
-    // Fruit('Blueberry'),
+    Fruit('Orange', 400),
+    Fruit('Banana', 400),
+    Fruit('Grape', 400),
+    Fruit('Watermelon', 400),
+    Fruit('Strawberry', 400),
+    Fruit('Pineapple', 400),
+    Fruit('Mango', 400),
+    Fruit('Cherry', 400),
+    Fruit('Kiwi', 400),
+    Fruit('Pear', 400),
+    Fruit('Plum', 400),
+    Fruit('Lemon', 400),
+    Fruit('Peach', 400),
+    Fruit('Blueberry', 400),
   ];
 
   double pos = 300;
@@ -67,26 +67,13 @@ class _MyAppState extends State<MyApp> {
               ),
               Positioned(
                 bottom: 0,
-                child: Container(color: Colors.green, height: 200, width: MediaQuery.of(context).size.width,),
+                child: Container(
+                  color: Colors.green,
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                ),
               ),
-              FloatingFruits(fruits: fruits[0]),
-              // AnimatedPositioned(
-              //   duration: Durations.long4,
-              //   bottom: pos,
-              //   child: GestureDetector(
-              //     onTap: () {
-              //       pos = pos == 200 ? 400 : 200;
-              //       setState(() {
-              //       });
-              //     },
-              //     child: Image.asset(
-              //       'assets/apple.png',
-              //       width: 50,
-              //       height: 50,
-              //     ),
-              //   ),
-              // ),
-
+              ...fruits.map((e) => FloatingFruits(fruits: e)).toList(),
             ],
           ),
         ),
@@ -105,9 +92,9 @@ class FloatingFruits extends StatefulWidget {
 }
 
 class _FloatingFruitsState extends State<FloatingFruits>
-    with SingleTickerProviderStateMixin{
-
+    with SingleTickerProviderStateMixin {
   double pos = 0;
+  double left = 0;
 
   late AnimationController _controller;
   late Animation<Offset> _animation;
@@ -115,14 +102,15 @@ class _FloatingFruitsState extends State<FloatingFruits>
   @override
   void initState() {
     pos = widget.fruits.pos;
+    left = Random().nextInt(300).toDouble();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-      reverseDuration: const Duration(seconds: 1),
+      // reverseDuration: const Duration(milliseconds: 50),
     );
     _animation = Tween<Offset>(
-      begin: const Offset(0.0, 0.0),
-      end: const Offset(0.0, 4.5),
+      begin: Offset(0, 0.0),
+      end: Offset(0, 4.5),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
@@ -137,9 +125,7 @@ class _FloatingFruitsState extends State<FloatingFruits>
   }
 
   void _animateFruitFall() {
-    _controller.forward().then((_) {
-      _controller.reverse().then((_) {
-        showDialog(
+    Future.delayed(Duration(milliseconds: 1500)).then((value) => showDialog(
           context: context,
           builder: (BuildContext context) {
             return Center(
@@ -172,37 +158,38 @@ class _FloatingFruitsState extends State<FloatingFruits>
               ),
             );
           },
-        );
-      });
+        ));
+    _controller.forward().then((_) {
+      _controller.reverse().then((_) {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return
-      AnimatedPositioned(
-          duration: Durations.long4,
-        bottom: pos,
-        child: GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            onTap: () {
-              // pos = pos == 100 ? widget.fruits.pos : 100;
-              // setState(() {
-              // });
-              _controller.reset();
-              _controller.forward();
-              _animateFruitFall();
-            },
-            child: SlideTransition(
-              position: _animation,
-              child: Image.asset(
-                'assets/${widget.fruits.name.toLowerCase()}.png',
-                width: 50,
-                height: 50,
-              ),
-            ),
+    return AnimatedPositioned(
+      duration: Durations.long4,
+      bottom: pos,
+      left: left,
+      child: GestureDetector(
+        behavior: HitTestBehavior.deferToChild,
+        onTap: () {
+          // pos = pos == 100 ? widget.fruits.pos : 100;
+          // setState(() {
+          // });
+          _controller.reset();
+          _controller.forward();
+          _animateFruitFall();
+        },
+        child: SlideTransition(
+          position: _animation,
+          child: Image.asset(
+            'assets/${widget.fruits.name.toLowerCase()}.png',
+            width: 50,
+            height: 50,
+          ),
         ),
-      );
+      ),
+    );
   }
 }
 //
