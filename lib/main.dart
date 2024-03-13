@@ -20,24 +20,22 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<Fruit> fruits = [
-    Fruit('Apple', 400),
-    Fruit('Orange', 400),
-    Fruit('Banana', 400),
-    Fruit('Grape', 400),
-    Fruit('Watermelon', 400),
+    Fruit('Apple', 400), 
+    Fruit('Orange', 450), 
+    Fruit('Banana', 470), 
+    Fruit('Grape', 480), 
+    Fruit('Watermelon', 380), 
     Fruit('Strawberry', 400),
-    Fruit('Pineapple', 400),
-    Fruit('Mango', 400),
-    Fruit('Cherry', 400),
-    Fruit('Kiwi', 400),
-    Fruit('Pear', 400),
-    Fruit('Plum', 400),
-    Fruit('Lemon', 400),
-    Fruit('Peach', 400),
-    Fruit('Blueberry', 400),
+    Fruit('Pineapple', 480),
+    Fruit('Mango', 450),
+    Fruit('Cherry', 390), 
+    Fruit('Kiwi', 360), 
+    Fruit('Pear', 390), 
+    Fruit('Plum', 330), 
+    Fruit('Lemon', 370), 
+    Fruit('Peach', 360), 
+    Fruit('Blueberry', 380), 
   ];
-
-  double pos = 300;
 
   @override
   Widget build(BuildContext context) {
@@ -53,34 +51,35 @@ class _MyAppState extends State<MyApp> {
             style: TextStyle(color: Colors.black),
           ),
         ),
-        body: Container(
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 200,
-                right: 10,
-                left: 10,
-                child: Image.asset(
-                  'assets/tree.png',
-                  fit: BoxFit.contain,
-                ),
+        body: Stack(
+          children: [
+            Positioned(
+              bottom: 200,
+              right: 10,
+              left: 10,
+              child: Image.asset(
+              
+                'assets/tree.png',
+                
+                fit: BoxFit.contain,
               ),
-              Positioned(
-                bottom: 0,
-                child: Container(
-                  color: Colors.green,
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                color: Colors.green,
+                height: 200,
+                width: MediaQuery.of(context).size.width,
               ),
-              ...fruits.map((e) => FloatingFruits(fruits: e)).toList(),
-            ],
-          ),
+            ),
+            ...fruits.map((e) => FloatingFruits(fruits: e)).toList(),
+          ],
         ),
       ),
     );
   }
 }
+
 
 class FloatingFruits extends StatefulWidget {
   final Fruit fruits;
@@ -103,14 +102,15 @@ class _FloatingFruitsState extends State<FloatingFruits>
   void initState() {
     pos = widget.fruits.pos;
     left = Random().nextInt(300).toDouble();
+    
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
       // reverseDuration: const Duration(milliseconds: 50),
     );
     _animation = Tween<Offset>(
-      begin: Offset(0, 0.0),
-      end: Offset(0, 4.5),
+      begin: const Offset(0, 0.0),
+      end: const Offset(0, 4),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
