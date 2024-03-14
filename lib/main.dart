@@ -20,10 +20,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final List<Fruit> fruits = [
-    Fruit('Lemon', 405),
-    Fruit('Mango', 420),
+    Fruit('Lemon', 400),
+    Fruit('Mango', 400),
     Fruit('Strawberry', 400),
-    Fruit('Pear', 410),
+    Fruit('Pear', 400),
     Fruit('Apple', 400),
   ];
 
@@ -86,14 +86,11 @@ class FloatingFruits extends StatefulWidget {
 
 class _FloatingFruitsState extends State<FloatingFruits>
     with SingleTickerProviderStateMixin {
-  late double left;
-
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
   @override
   void initState() {
-    _initializePosition();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -108,10 +105,6 @@ class _FloatingFruitsState extends State<FloatingFruits>
     super.initState();
   }
 
-  void _initializePosition() {
-    left = widget.index * 65.0;
-  }
-
   @override
   void dispose() {
     _controller.dispose();
@@ -119,40 +112,41 @@ class _FloatingFruitsState extends State<FloatingFruits>
   }
 
   void _animateFruitFall() {
-    Future.delayed(const Duration(milliseconds: 1500)).then((value) => showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Center(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/${widget.fruits.name.toLowerCase()}.png',
-                        width: 100,
-                        height: 100,
+    Future.delayed(const Duration(milliseconds: 1500))
+        .then((value) => showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Center(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/${widget.fruits.name.toLowerCase()}.png',
+                            width: 100,
+                            height: 100,
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            widget.fruits.name,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 20),
-                      Text(
-                        widget.fruits.name,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
-        ));
+                );
+              },
+            ));
     _controller.forward().then((_) {
       _controller.reverse().then((_) {});
     });
@@ -163,7 +157,7 @@ class _FloatingFruitsState extends State<FloatingFruits>
     return AnimatedPositioned(
       duration: const Duration(seconds: 1),
       bottom: widget.fruits.pos,
-      left: left,
+      left: 100,
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
         onTap: () {
