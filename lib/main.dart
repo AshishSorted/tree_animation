@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
@@ -35,8 +35,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with TickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
@@ -70,16 +69,12 @@ class _HomePageState extends State<HomePage>
       if (status == AnimationStatus.forward) {
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
-        }
-        else {
+        } else {
           activeFruit = 0;
         }
-        setState(() {
-
-        });
+        setState(() {});
         // _fadeController
         // _fadeController.repeat();
-
       }
       if (status == AnimationStatus.completed) {
         _fadeController.forward(from: 0);
@@ -95,11 +90,11 @@ class _HomePageState extends State<HomePage>
   }
 
   final List<Fruit> fruits = [
+    Fruit('Apple', 400),
+    Fruit('Pear', 400),
     Fruit('Lemon', 400),
     Fruit('Mango', 400),
     Fruit('Strawberry', 400),
-    Fruit('Pear', 400),
-    Fruit('Apple', 400),
   ];
 
   void _animateFruitFall(Fruit fruit) async {
@@ -128,15 +123,23 @@ class _HomePageState extends State<HomePage>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const SizedBox(height: 20),
                       Image.asset(
                         'assets/${fruit.name.toLowerCase()}.png',
                         width: 100,
                         height: 100,
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        fruit.name,
-                        style: const TextStyle(fontSize: 20),
+                      Center(
+                        child: Material(
+                          child: Text(
+                            fruit.name,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -148,8 +151,7 @@ class _HomePageState extends State<HomePage>
         // _fadeController.stop();
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
-        }
-        else {
+        } else {
           activeFruit = 0;
         }
         setState(() {});
