@@ -98,12 +98,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ];
 
   void _animateFruitFall(Fruit fruit) async {
-    // _fadeController.forward(from: .5);
-    // _fadeController.reset();
     _controller.forward().then((_) {
       _controller.reverse().then((_) {});
     });
-    // _fadeController.animateTo(.5);
+
     await Future.delayed(const Duration(milliseconds: 1500)).then(
       (value) async {
         await showDialog(
@@ -148,7 +146,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             );
           },
         );
-        // _fadeController.stop();
+
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
         } else {
@@ -222,114 +220,3 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
-
-// class FloatingFruits extends StatefulWidget {
-//   Fruit fruits;
-//   final int index;
-//
-//   FloatingFruits({Key? key, required this.fruits, required this.index})
-//       : super(key: key);
-//
-//   @override
-//   State<FloatingFruits> createState() => _FloatingFruitsState();
-// }
-//
-// class _FloatingFruitsState extends State<FloatingFruits>
-//     with SingleTickerProviderStateMixin {
-//   late AnimationController _controller;
-//   late Animation<Offset> _animation;
-//
-//   @override
-//   void initState() {
-//     _controller = AnimationController(
-//       vsync: this,
-//       duration: const Duration(seconds: 1),
-//     );
-//     _animation = Tween<Offset>(
-//       begin: const Offset(0, 0.0),
-//       end: const Offset(0, 4),
-//     ).animate(CurvedAnimation(
-//       parent: _controller,
-//       curve: Curves.easeInOut,
-//     ));
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//
-//   void _animateFruitFall() {
-//     Future.delayed(const Duration(milliseconds: 1500))
-//         .then((value) async {
-//       await showDialog(
-//         context: context,
-//         builder: (BuildContext context) {
-//           return Center(
-//             child: AnimatedContainer(
-//               duration: const Duration(milliseconds: 500),
-//               curve: Curves.easeInOut,
-//               width: 200,
-//               height: 200,
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(20.0),
-//               ),
-//               child: SingleChildScrollView(
-//                 child: Column(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: [
-//                     Image.asset(
-//                       'assets/${widget.fruits.name.toLowerCase()}.png',
-//                       width: 100,
-//                       height: 100,
-//                     ),
-//                     const SizedBox(height: 20),
-//                     Text(
-//                       widget.fruits.name,
-//                       style: const TextStyle(fontSize: 20),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       );
-//       widget.fruits.done = true;
-//       setState(() {
-//
-//       });
-//     });
-//     _controller.forward().then((_) {
-//       _controller.reverse().then((_) {});
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return AnimatedPositioned(
-//       duration: const Duration(seconds: 1),
-//       bottom: widget.fruits.pos,
-//       left: 100,
-//       child: GestureDetector(
-//         behavior: HitTestBehavior.deferToChild,
-//         onTap: () {
-//           _controller.reset();
-//           _controller.forward();
-//           _animateFruitFall();
-//         },
-//         child: SlideTransition(
-//           position: _animation,
-//           child: Image.asset(
-//             'assets/${widget.fruits.name.toLowerCase()}.png',
-//             width: 50,
-//             height: 50,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
