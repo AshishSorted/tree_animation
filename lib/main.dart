@@ -1,9 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class Fruit {
@@ -14,27 +12,19 @@ class Fruit {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   final List<Fruit> fruits = [
-    Fruit('Apple', 400), 
-    Fruit('Orange', 450), 
-    Fruit('Banana', 470), 
-    Fruit('Grape', 480), 
-    Fruit('Watermelon', 380), 
+    Fruit('Lemon', 405),
+    Fruit('Mango', 420),
     Fruit('Strawberry', 400),
-    Fruit('Pineapple', 480),
-    Fruit('Mango', 450),
-    Fruit('Cherry', 390), 
-    Fruit('Kiwi', 360), 
-    Fruit('Pear', 390), 
-    Fruit('Plum', 330), 
-    Fruit('Lemon', 370), 
-    Fruit('Peach', 360), 
-    Fruit('Blueberry', 380), 
+    Fruit('Pear', 410),
+    Fruit('Apple', 400),
   ];
 
   @override
@@ -58,9 +48,7 @@ class _MyAppState extends State<MyApp> {
               right: 10,
               left: 10,
               child: Image.asset(
-              
                 'assets/tree.png',
-                
                 fit: BoxFit.contain,
               ),
             ),
@@ -72,7 +60,12 @@ class _MyAppState extends State<MyApp> {
                 width: MediaQuery.of(context).size.width,
               ),
             ),
-            ...fruits.map((e) => FloatingFruits(fruits: e)).toList(),
+            ...fruits
+                .asMap()
+                .entries
+                .map((entry) =>
+                    FloatingFruits(fruits: entry.value, index: entry.key))
+                .toList(),
           ],
         ),
       ),
@@ -80,11 +73,12 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
 class FloatingFruits extends StatefulWidget {
   final Fruit fruits;
+  final int index;
 
-  const FloatingFruits({Key? key, required this.fruits}) : super(key: key);
+  const FloatingFruits({Key? key, required this.fruits, required this.index})
+      : super(key: key);
 
   @override
   State<FloatingFruits> createState() => _FloatingFruitsState();
@@ -92,21 +86,17 @@ class FloatingFruits extends StatefulWidget {
 
 class _FloatingFruitsState extends State<FloatingFruits>
     with SingleTickerProviderStateMixin {
-  double pos = 0;
-  double left = 0;
+  late double left;
 
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
   @override
   void initState() {
-    pos = widget.fruits.pos;
-    left = Random().nextInt(300).toDouble();
-    
+    _initializePosition();
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-      // reverseDuration: const Duration(milliseconds: 50),
     );
     _animation = Tween<Offset>(
       begin: const Offset(0, 0.0),
@@ -118,6 +108,10 @@ class _FloatingFruitsState extends State<FloatingFruits>
     super.initState();
   }
 
+  void _initializePosition() {
+    left = widget.index * 65.0;
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -125,7 +119,7 @@ class _FloatingFruitsState extends State<FloatingFruits>
   }
 
   void _animateFruitFall() {
-    Future.delayed(Duration(milliseconds: 1500)).then((value) => showDialog(
+    Future.delayed(const Duration(milliseconds: 1500)).then((value) => showDialog(
           context: context,
           builder: (BuildContext context) {
             return Center(
@@ -147,7 +141,7 @@ class _FloatingFruitsState extends State<FloatingFruits>
                         width: 100,
                         height: 100,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                         widget.fruits.name,
                         style: const TextStyle(fontSize: 20),
@@ -167,15 +161,12 @@ class _FloatingFruitsState extends State<FloatingFruits>
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-      duration: Durations.long4,
-      bottom: pos,
+      duration: const Duration(seconds: 1),
+      bottom: widget.fruits.pos,
       left: left,
       child: GestureDetector(
         behavior: HitTestBehavior.deferToChild,
         onTap: () {
-          // pos = pos == 100 ? widget.fruits.pos : 100;
-          // setState(() {
-          // });
           _controller.reset();
           _controller.forward();
           _animateFruitFall();
@@ -192,90 +183,3 @@ class _FloatingFruitsState extends State<FloatingFruits>
     );
   }
 }
-//
-// class FruitWidget extends StatefulWidget {
-//   final Fruit fruit;
-//
-//   const FruitWidget({Key? key, required this.fruit}) : super(key: key);
-//
-//   @override
-//   _FruitWidgetState createState() => _FruitWidgetState();
-// }
-//
-// class _FruitWidgetState extends State<FruitWidget>
-//     with SingleTickerProviderStateMixin {
-//
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//
-//   }
-//
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//
-//   void _animateFruitFall() {
-//     _controller.forward().then((_) {
-//       _controller.reverse().then((_) {
-//         showDialog(
-//           context: context,
-//           builder: (BuildContext context) {
-//             return Center(
-//               child: AnimatedContainer(
-//                 duration: const Duration(milliseconds: 500),
-//                 curve: Curves.easeInOut,
-//                 width: 200,
-//                 height: 200,
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(20.0),
-//                 ),
-//                 child: SingleChildScrollView(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     children: [
-//                       Image.asset(
-//                         'assets/${widget.fruit.name.toLowerCase()}.png',
-//                         width: 100,
-//                         height: 100,
-//                       ),
-//                       SizedBox(height: 20),
-//                       Text(
-//                         widget.fruit.name,
-//                         style: const TextStyle(fontSize: 20),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             );
-//           },
-//         );
-//       });
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       behavior: HitTestBehavior.translucent,
-//       onTap: () {
-//         _controller.reset();
-//         _controller.forward();
-//         _animateFruitFall();
-//       },
-//       child: SlideTransition(
-//         position: _animation,
-//         child: Image.asset(
-//           'assets/${widget.fruit.name.toLowerCase()}.png',
-//           width: 50,
-//           height: 50,
-//         ),
-//       ),
-//     );
-//   }
-// }
