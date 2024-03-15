@@ -30,14 +30,7 @@ class MainScreen extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                color: Colors.green,
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-              ),
-            ),
+            
             const FruitListWidget(pos: 400),
             const FruitListWidget(pos: 430),
             const FruitListWidget(pos: 450),

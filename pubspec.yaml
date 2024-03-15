@@ -12,6 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
+  flutter_svg: ^2.0.9
+  formz: ^0.4.1
+  device_info_plus: ^8.2.2
+  package_info_plus: ^5.0.1
+  dio: ^5.4.0
+  logger: ^2.0.2+1
+  dotted_border:
+  dotted_line: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -25,7 +33,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/images/
   fonts:
     - family: helvetica
       fonts:
