@@ -95,7 +95,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     );
     _animation = Tween<Offset>(
       begin: const Offset(0, 0.0),
-      end: const Offset(0, 4),
+      end: Offset(0, 4 + (((widget.pos / 100) - 4) * 2)),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
