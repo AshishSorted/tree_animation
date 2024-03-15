@@ -8,6 +8,7 @@ class AppTheme {
   static const greyWithGreatOpacity = Color(0xFFCCCCCC);
   static const greytrackScreen = Color(0xFFF5F5F5);
   static const bool isDark = false;
+    static const borderColor = Color(0xE0E0E0E0);
   static const double maxWidth = 800;
   static const brownOptionScreen = Color(0xFF92503C);
   static const greyBottomSheet = Color(0xFFEFEFEF);

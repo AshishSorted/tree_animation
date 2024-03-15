@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as get_;
+import 'package:tree_animation/screen/splash/splash_screen.dart';
 import '../common/strings.dart';
-import '../screen/splash_screen/splash_screen.dart';
+
 import '../utils/logger.dart';
 import 'api_end_points.dart';
 import 'shared_prefs.dart';

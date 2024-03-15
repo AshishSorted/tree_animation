@@ -64,6 +64,41 @@ class Insets {
   static double get offset => 48 * offsetScale;
 
   static double get offsetMed => 50 * offsetScale;
+
+  static double offsetPoint5 = 0.5;
+  static double offset0 = 0;
+  static double offset1 = 1;
+  static double offset2 = 2;
+  static double offset3 = 3;
+  static double offset4 = 4;
+  static double offset5 = 5;
+  static double offset10 = 10;
+  static double offset13 = 13;
+  static double offset12 = 12;
+  static double offset14 = 14;
+  static double offset15 = 15;
+  static double offset16 = 16;
+  static double offset20 = 20;
+  static double offset24 = 24;
+  static double offset25 = 25;
+  static double offset29 = 29;
+  static double offset32 = 32;
+  static double offset34 = 34;
+  static double offset36 = 36;
+  static double offset40 = 40;
+  static double offset43 = 43;
+  static double offset44 = 44;
+  static double offset56 = 56;
+  static double offset50 = 50;
+  static double offset64 = 64;
+  static double offset74 = 74;
+  static double offset104 = 104;
+  static double offset132 = 132;
+  static double offset136 = 136;
+  static const double offset176 = 176;
+  static double offset199 = 199;
+  static double offset200 = 200;
+  static double offset342 = 342;
 }
 
 class Shadows {
