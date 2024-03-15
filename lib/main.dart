@@ -42,14 +42,14 @@ class MyApp extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                color: Colors.green,
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-              ),
-            ),
+            // Positioned(
+            //   bottom: 0,
+            //   child: Container(
+            //     color: Colors.green,
+            //     height: 200,
+            //     width: MediaQuery.of(context).size.width,
+            //   ),
+            // ),
             const FruitList(pos: 400),
             const FruitList(pos: 430),
             const FruitList(pos: 450),
@@ -103,7 +103,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
 
     _fadeController.addStatusListener((status) {
       if (status == AnimationStatus.forward && _fadeController.isAnimating) {
-        print("Fruit index: $activeFruit ");
+        // print("Fruit index: $activeFruit ");
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
         } else {
