@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -74,7 +76,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   late Animation<Offset> _animation;
 
   late final AnimationController _fadeController = AnimationController(
-    duration: const Duration(seconds: 1),
+    duration:  Duration(milliseconds: Random().nextInt(500)+700),
     vsync: this,
   )..repeat(reverse: true);
   late final Animation<double> _fadeAnimation = CurvedAnimation(
