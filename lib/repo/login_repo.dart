@@ -11,7 +11,7 @@ class LoginRepo {
   static Future<bool> postOtp(SendOtpRequest sendOtpRequest) async {
     try {
       DioApi.Response response = await ApiClient.postRequest(
-          endpoint: ApiEndPoints.authAdminOtp, param: sendOtpRequest);
+          endpoint: ApiEndPoints.authAdminOtp, param: sendOtpRequest.toJson());
       if (response.statusCode == 201) {
         logger.d("Not Null response ");
         return true;

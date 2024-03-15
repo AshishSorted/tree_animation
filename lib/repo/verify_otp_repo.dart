@@ -13,7 +13,7 @@ class OtpReop {
       VerifyOtpRequest verifyOtpRequest) async {
     try {
       DioApi.Response response = await ApiClient.postRequest(
-          endpoint: ApiEndPoints.authAdminVerifyOtp, param: verifyOtpRequest);
+          endpoint: ApiEndPoints.authAdminVerifyOtp, param: verifyOtpRequest.toJson());
       if (response.statusCode == 201) {
         logger.d("Not Null response ");
       } else {

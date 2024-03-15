@@ -30,20 +30,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Material(
-        color: AppTheme.white,
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          TextButton(
-            onPressed: null,
-            child: Text(
-              "Sorted",
-              style: TextStyles.h0,
-            ),
-          ),
-        ]),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: Text("Splash"),),
     );
   }
 }

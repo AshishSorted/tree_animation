@@ -106,7 +106,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                     children: [
                       const SizedBox(height: 20),
                       Image.asset(
-                        'assets/${fruit.name.toLowerCase()}.png',
+                        'assets/images/${fruit.name.toLowerCase()}.png',
                         width: 100,
                         height: 100,
                       ),
@@ -163,7 +163,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
               child: SlideTransition(
                 position: _animation,
                 child: Image.asset(
-                  'assets/${fruits[activeFruit].name.toLowerCase()}.png',
+                  'assets/images/${fruits[activeFruit].name.toLowerCase()}.png',
                   width: 50,
                   height: 50,
                 ),
