@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:tree_animation/themes.dart';
+import 'package:tree_animation/common/themes.dart';
 
 class Times {
   static const Duration fastest = Duration(milliseconds: 150);

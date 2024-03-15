@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:tree_animation/styles.dart';
 
-import '../themes.dart';
+import '../common/styles.dart';
+import '../common/themes.dart';
 
 class ShowAlertDialog {
   static showAlertDialog(BuildContext context, Widget child,
@@ -48,7 +48,7 @@ class _AnimatedAlertDialogState extends State<AnimatedAlertDialog>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 0),
+      duration: const Duration(milliseconds: 0),
     );
 
     _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
@@ -66,7 +66,10 @@ class _AnimatedAlertDialogState extends State<AnimatedAlertDialog>
     return ScaleTransition(
       scale: _scaleAnimation,
       child: AlertDialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 0).copyWith(
+        insetPadding: const EdgeInsets.symmetric(
+          horizontal: 0,
+          vertical: 0,
+        ).copyWith(
           top: Insets.xxl * 1.5,
         ),
         contentPadding: EdgeInsets.symmetric(vertical: Insets.xs),
