@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tree_animation/screen/login/login_screen.dart';
-import 'package:tree_animation/screen/main_screen.dart';
+import 'package:tree_animation/screen/main_screen/main_screen.dart';
 import 'package:tree_animation/screen/splash/splash_screen.dart';
 
 import 'package:tree_animation/screen/verify_otp/verify_otp_screen.dart';
