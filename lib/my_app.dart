@@ -13,28 +13,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     init();
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: AppTheme.white),
-      builder: (context, child) {
-        return ResponsiveBuilder(builder: (context, sizingInfo) {
-          if (sizingInfo.isMobile) {
-            return child!;
-          } else {
-           return child!;
-          }
-        });
-      },
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown
+    return Material(
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(scaffoldBackgroundColor: AppTheme.white),
+        builder: (context, child) {
+          return ResponsiveBuilder(builder: (context, sizingInfo) {
+            if (sizingInfo.isMobile) {
+              return child!;
+            } else {
+             return child!;
+            }
+          });
         },
+        scrollBehavior: const MaterialScrollBehavior().copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+            PointerDeviceKind.stylus,
+            PointerDeviceKind.unknown
+          },
+        ),
+        initialRoute: AppPages.initial,
+        getPages: AppPages.routes,
       ),
-      initialRoute: AppPages.initial,
-      getPages: AppPages.routes,
     );
   }
 

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tree_animation/common/themes.dart';
 import 'package:tree_animation/logic.dart';
-
+import 'package:tree_animation/screen/main_screen/address_controller.dart';
+import 'package:tree_animation/screen/main_screen/create_order_controller.dart';
+import 'package:tree_animation/screen/main_screen/inventory_controller.dart';
+import 'package:tree_animation/screen/main_screen/widget/congratulations%20dialog.dart';
+import 'package:tree_animation/widgets/show_alert_dialog.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -10,18 +16,24 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  AddAddressController addAddressController = Get.put(AddAddressController());
+  CreateOrderController createOrderController =
+      Get.put(CreateOrderController());
+
+  InventoryController inventoryController = Get.put(InventoryController());
 
   @override
   void initState() {
+    inventoryController.getInventory("10001");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         title: const Text(
@@ -40,7 +52,19 @@ class _MainScreenState extends State<MainScreen> {
               fit: BoxFit.contain,
             ),
           ),
-
+          Positioned(
+              left: 100,
+              child: GestureDetector(
+                onTap: () {
+                  ShowAlertDialog.showAlertDialog(
+                      context, const SelectSocietyDialog());
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  color: AppTheme.primaryColor1,
+                ),
+              )),
           const FruitListWidget(pos: 400),
           const FruitListWidget(pos: 430),
           const FruitListWidget(pos: 450),
