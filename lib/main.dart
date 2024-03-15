@@ -208,21 +208,24 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                       : 200,
       child: AnimatedContainer(
         duration: const Duration(seconds: 1),
-        child: FadeTransition(
-          opacity: _fadeAnimation,
-          child: GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            onTap: () {
-              _controller.reset();
-              _controller.forward();
-              _animateFruitFall(fruits[activeFruit]);
-            },
-            child: SlideTransition(
-              position: _animation,
-              child: Image.asset(
-                'assets/${fruits[activeFruit].name.toLowerCase()}.png',
-                width: 50,
-                height: 50,
+        child: ScaleTransition(
+          scale: _fadeAnimation,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTap: () {
+                _controller.reset();
+                _controller.forward();
+                _animateFruitFall(fruits[activeFruit]);
+              },
+              child: SlideTransition(
+                position: _animation,
+                child: Image.asset(
+                  'assets/${fruits[activeFruit].name.toLowerCase()}.png',
+                  width: 50,
+                  height: 50,
+                ),
               ),
             ),
           ),
