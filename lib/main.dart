@@ -76,7 +76,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   late Animation<Offset> _animation;
 
   late final AnimationController _fadeController = AnimationController(
-    duration:  Duration(milliseconds: Random().nextInt(500)+700),
+    duration: Duration(milliseconds: Random().nextInt(500) + 700),
     vsync: this,
   )..repeat(reverse: true);
   late final Animation<double> _fadeAnimation = CurvedAnimation(
@@ -102,7 +102,8 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     ));
 
     _fadeController.addStatusListener((status) {
-      if (status == AnimationStatus.forward) {
+      if (status == AnimationStatus.forward && _fadeController.isAnimating) {
+        print("Fruit index: $activeFruit ");
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
         } else {
@@ -110,9 +111,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
         }
         setState(() {});
       }
-      if (status == AnimationStatus.completed) {
-        _fadeController.forward(from: 0);
-      }
+      if (status == AnimationStatus.completed) {}
     });
 
     fruits = [
@@ -183,12 +182,17 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
           },
         );
 
-        if (activeFruit != (fruits.length - 1)) {
-          activeFruit += 1;
-        } else {
-          activeFruit = 0;
-        }
-        setState(() {});
+        // _fadeController.forward(from: 0).then((_) {
+        //   _fadeController.reverse().then((_) {});
+        // });
+        _fadeController.repeat(reverse: true);
+
+        // if (activeFruit != (fruits.length - 1)) {
+        //   activeFruit += 1;
+        // } else {
+        //   activeFruit = 0;
+        // }
+        // setState(() {});
       },
     );
   }
@@ -208,15 +212,14 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                       : 200,
       child: AnimatedContainer(
         duration: const Duration(seconds: 1),
-        child: ScaleTransition(
-          scale: _fadeAnimation,
-          child: FadeTransition(
-            opacity: _fadeAnimation,
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: ScaleTransition(
+            scale: _fadeAnimation,
             child: GestureDetector(
               behavior: HitTestBehavior.deferToChild,
               onTap: () {
-                _controller.reset();
-                _controller.forward();
+                _fadeController.animateBack(1);
                 _animateFruitFall(fruits[activeFruit]);
               },
               child: SlideTransition(
