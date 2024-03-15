@@ -9,9 +9,9 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.yellow,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.yellow,
           elevation: 0,
           centerTitle: true,
           title: const Text(
