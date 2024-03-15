@@ -12,30 +12,64 @@ class Fruit {
   Fruit(this.name, this.pos, {this.done});
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            'Floating Fruits',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        body: Stack(
+          children: [
+            Positioned(
+              bottom: 200,
+              right: 10,
+              left: 10,
+              child: Image.asset(
+                'assets/tree.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                color: Colors.green,
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
+            const FruitList(pos: 400),
+            const FruitList(pos: 430),
+            const FruitList(pos: 450),
+            const FruitList(pos: 410),
+            const FruitList(pos: 460),
+          ],
+        ),
+      ),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class FruitList extends StatefulWidget {
+  final double pos;
+
+  const FruitList({Key? key, required this.pos}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<FruitList> createState() => _FruitListState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
@@ -49,6 +83,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   );
 
   int activeFruit = 0;
+  late List<Fruit> fruits;
 
   @override
   void initState() {
@@ -65,7 +100,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     ));
 
     _fadeController.addStatusListener((status) {
-      print(status.toString());
       if (status == AnimationStatus.forward) {
         if (activeFruit != (fruits.length - 1)) {
           activeFruit += 1;
@@ -73,29 +107,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           activeFruit = 0;
         }
         setState(() {});
-        // _fadeController
-        // _fadeController.repeat();
       }
       if (status == AnimationStatus.completed) {
         _fadeController.forward(from: 0);
       }
     });
+
+    fruits = [
+      Fruit('Apple', widget.pos),
+      Fruit('Pear', widget.pos),
+      Fruit('Lemon', widget.pos),
+      Fruit('Mango', widget.pos),
+      Fruit('Strawberry', widget.pos),
+    ];
+
     super.initState();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
-
-  final List<Fruit> fruits = [
-    Fruit('Apple', 400),
-    Fruit('Pear', 400),
-    Fruit('Lemon', 400),
-    Fruit('Mango', 400),
-    Fruit('Strawberry', 400),
-  ];
 
   void _animateFruitFall(Fruit fruit) async {
     _controller.forward().then((_) {
@@ -159,63 +193,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Floating Fruits',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Positioned(
-            bottom: 200,
-            right: 10,
-            left: 10,
-            child: Image.asset(
-              'assets/tree.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              color: Colors.green,
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-            ),
-          ),
-          Positioned(
-            bottom: fruits[activeFruit].pos,
-            left: 100,
-            child: AnimatedContainer(
-              duration: const Duration(seconds: 1),
-              child: FadeTransition(
-                opacity: _fadeAnimation,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.deferToChild,
-                  onTap: () {
-                    _controller.reset();
-                    _controller.forward();
-                    _animateFruitFall(fruits[activeFruit]);
-                  },
-                  child: SlideTransition(
-                    position: _animation,
-                    child: Image.asset(
-                      'assets/${fruits[activeFruit].name.toLowerCase()}.png',
-                      width: 50,
-                      height: 50,
-                    ),
-                  ),
-                ),
+    return Positioned(
+      bottom: fruits[activeFruit].pos,
+      left: fruits[activeFruit].pos == 400
+          ? 300
+          : fruits[activeFruit].pos == 430
+              ? 60
+              : fruits[activeFruit].pos == 450
+                  ? 250
+                  : fruits[activeFruit].pos == 460
+                      ? 120
+                      : 200,
+      child: AnimatedContainer(
+        duration: const Duration(seconds: 1),
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: GestureDetector(
+            behavior: HitTestBehavior.deferToChild,
+            onTap: () {
+              _controller.reset();
+              _controller.forward();
+              _animateFruitFall(fruits[activeFruit]);
+            },
+            child: SlideTransition(
+              position: _animation,
+              child: Image.asset(
+                'assets/${fruits[activeFruit].name.toLowerCase()}.png',
+                width: 50,
+                height: 50,
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
