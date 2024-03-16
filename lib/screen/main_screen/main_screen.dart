@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tree_animation/common/themes.dart';
+
 import 'package:tree_animation/logic.dart';
 import 'package:tree_animation/screen/main_screen/address_controller.dart';
 import 'package:tree_animation/screen/main_screen/create_order_controller.dart';
 import 'package:tree_animation/screen/main_screen/inventory_controller.dart';
-import 'package:tree_animation/screen/main_screen/widget/congratulations%20dialog.dart';
-import 'package:tree_animation/widgets/show_alert_dialog.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
