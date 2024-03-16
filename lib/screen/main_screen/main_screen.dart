@@ -35,6 +35,13 @@ class _MainScreenState extends State<MainScreen> {
 
   getData() async {
     await inventoryController.getInventory("10001");
+    await createOrderController.getSlotsList();
+    await addAddressController.getSocietyData();
+    if (addAddressController.societyList.isNotEmpty) {
+      createOrderController.selectedSociety.value = addAddressController.societyList.first;
+      createOrderController.storeId.value = int.parse(addAddressController.societyList.first.storeId!);
+      addAddressController.selectedTowers.value = addAddressController.societyList.first.tower ?? [];
+    }
     inventoryController.cdnUrl.value = await SharedPref.getCDNBaseUrl() ?? "";
   }
 

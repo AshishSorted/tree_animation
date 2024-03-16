@@ -12,6 +12,9 @@ import 'package:tree_animation/screen/main_screen/create_order_controller.dart';
 import 'package:tree_animation/screen/main_screen/inventory_controller.dart';
 import 'package:tree_animation/screen/main_screen/model/inventory.dart';
 
+import 'widget/address_dialog.dart';
+import 'widget/phone_and_name_dialog.dart';
+
 class Fruit {
   final String name;
   final double pos;
@@ -274,25 +277,29 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
         _fadeController.repeat(reverse: true);
       },
     );
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return PhoneAndNameDialog();
+      },
+    );
+    if (createOrderController.user.value != null) {
+      await addressController.getUserAddresses(createOrderController.user.value!.id!);
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const AddressDialog();
+        },
+      );
+      createOrderController.addInventory(fruit);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      // bottom: fruits[activeFruit].pos,
-      // bottom: generateRandomNumbers(1)[0].toDouble(),
       bottom: 400,
-
       left: randomNumbers[activeFruit].toDouble(),
-      // fruits[activeFruit].pos == 400
-      //     ? 300
-      //     : fruits[activeFruit].pos == 430
-      //         ? 60
-      //         : fruits[activeFruit].pos == 450
-      //             ? 250
-      //             : fruits[activeFruit].pos == 460
-      //                 ? 120
-      //                 : 200,
       child: AnimatedContainer(
         duration: const Duration(seconds: 1),
         child: FadeTransition(

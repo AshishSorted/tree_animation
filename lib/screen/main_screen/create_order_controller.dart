@@ -221,12 +221,9 @@ class CreateOrderController extends GetxController {
         logger.d('Post Address  response is not null');
         formzStatus.value = FormzStatus.submissionSuccess;
         user.value = userResponse.data;
-        // if (user.value?.preferredSlotId != null) {
-        //   selectedSlot.value = listSlots.firstWhereOrNull(
-        //           (element) => element.id == user.value!.preferredSlotId!);
-        // }
         return null;
-      } else {
+      }
+      else {
         logger.d('Post Address  response is null');
         formzStatus.value = FormzStatus.submissionFailure;
         return userResponse is Failure ? userResponse.error : null;
@@ -267,8 +264,8 @@ class CreateOrderController extends GetxController {
 
       if (slotsList != null) {
         listSlots.value = slotsList;
-        // selectedSlot.value ??= slotsList
-        //     .firstWhereOrNull((element) => element.isAvailable == true);
+        selectedSlot.value ??= slotsList
+            .firstWhereOrNull((element) => element.isAvailable == true);
         logger.d("Slots List :${listSlots.length}");
       } else {
         logger.d("Slots List :${Strings.someThingWentWrong}");

@@ -101,7 +101,6 @@ class AddAddressController extends GetxController {
       await SocietyRepo.getSocietyList();
       if (societyResponse != null) {
         societyList.value = societyResponse.data ?? [];
-
         logger.d("Society List :$societyList");
       } else {
         logger.d("Society List :${Strings.someThingWentWrong}");

@@ -10,6 +10,9 @@ import 'package:tree_animation/screen/main_screen/widget/final_dialog.dart';
 import 'package:tree_animation/widgets/custom_textfield_2.dart';
 import 'package:tree_animation/widgets/society_drop_down.dart';
 
+import '../address_controller.dart';
+import '../create_order_controller.dart';
+
 class AddressDialog extends StatefulWidget {
   const AddressDialog({super.key});
 
@@ -22,10 +25,27 @@ class _AddressDialogState extends State<AddressDialog> {
   final towerController = TextEditingController();
   final floorController = TextEditingController();
 
-  // final floorController = TextEditingController();
-  // final pinCodeController = TextEditingController();
+  final CreateOrderController createOrderController = Get.find();
+  AddAddressController addressController = Get.find();
+
   Tower? selectedTower;
   int? selectedFloor;
+
+  @override
+  void initState() {
+    setAddressData();
+    super.initState();
+  }
+
+  setAddressData() {
+    if (addressController.address.value != null) {
+      createOrderController.address.value = addressController.address.value;
+      flatController.text = addressController.address.value?.house ?? "";
+      towerController.text = addressController.address.value?.tower ?? "";
+      floorController.text = addressController.address.value?.floor ?? "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BackdropFilter(
@@ -122,10 +142,8 @@ class _AddressDialogState extends State<AddressDialog> {
                                   borderWidth: 1.2,
                                   borderColor: AppTheme.alto,
                                   hintTextColor: AppTheme.dustyGrey,
-                                  // towerList:Tower
-                                  //     selectSocietyController.selectedSociety?.tower,
+                                  towerList: addressController.selectedTowers,
                                   selectedTower: selectedTower,
-                                  // addressListController.selectedSocietyModel.value,
                                   hintText: Strings.towerBlock,
                                   onChanged: (tower) {
                                     if (mounted) {
