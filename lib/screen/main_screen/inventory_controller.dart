@@ -13,6 +13,9 @@ class InventoryController extends GetxController {
   RxList<InventoryResponseModel> inventories = <InventoryResponseModel>[].obs;
   Rx<FormzStatus> formzStatus = FormzStatus.pure.obs;
   // Rxn<StoreResponseModel> store = Rxn<StoreResponseModel>();
+  Rx<String> cdnUrl = "".obs;
+
+
 
   void allowEdit(int index) {
     bool editing = tmpInventories[index].editing;

@@ -76,6 +76,11 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    print("Fruits are ${inventoryController.inventories}");
+
+    fruits = inventoryController.inventories.sublist(0, 5);
+
+    randomNumbers = generateRandomNumbers(10);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -107,8 +112,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     //   Fruit('Mango', widget.pos),
     //   Fruit('Strawberry', widget.pos),
     // ];
-    fruits = inventoryController.inventories.sublist(0, 5);
-    randomNumbers = generateRandomNumbers(10);
+
     super.initState();
   }
 
@@ -200,9 +204,15 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                                         //   width: 100,
                                         //   height: 100,
                                         // ),
-                                        Image.network(fruit.product?.imageUrl
-                                                .toString() ??
-                                            "", height: 100, width: 100,),
+                                        Obx(() {
+                                            return Image.network(
+                                              inventoryController.cdnUrl.value + (fruit.product?.imageUrl.toString() ??
+                                                  ""),
+                                              height: 100,
+                                              width: 100,
+                                            );
+                                          }
+                                        ),
                                         const SizedBox(height: 20),
                                         Center(
                                           child: Text(
@@ -297,10 +307,14 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
               },
               child: SlideTransition(
                 position: _animation,
-                child: Image.network(
-                  fruits[activeFruit].product?.imageUrl.toString() ?? "",
-                  width: 50,
-                  height: 50,
+                child: Obx(
+                        () {
+                    return Image.network(
+                      inventoryController.cdnUrl.value + (fruits[activeFruit].product?.imageUrl.toString() ?? ""),
+                      width: 50,
+                      height: 50,
+                    );
+                  }
                 ),
               ),
             ),
