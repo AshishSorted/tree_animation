@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tree_animation/common/strings.dart';
 import 'package:tree_animation/common/styles.dart';
 import 'package:tree_animation/common/themes.dart';
+import 'package:tree_animation/screen/main_screen/model/address.dart';
 import 'package:tree_animation/screen/main_screen/model/society.dart';
 import 'package:tree_animation/screen/main_screen/widget/final_dialog.dart';
 import 'package:tree_animation/widgets/custom_textfield_2.dart';
@@ -123,6 +124,11 @@ class _AddressDialogState extends State<AddressDialog> {
                                   hintTextColor: AppTheme.greyB2B2B2,
                                   controller: flatController,
                                   hintText: Strings.flatVilla,
+                                  onChanged: (val) {
+                                    addressController.address.value = (addressController.address.value ?? const Address()).copyWith(
+                                      house: val,
+                                    );
+                                  },
                                 ),
                                 SizedBox(
                                   height: Insets.xs,
@@ -134,6 +140,11 @@ class _AddressDialogState extends State<AddressDialog> {
                                   controller: floorController,
                                   hintText: Strings.floor,
                                   inputType: TextInputType.number,
+                                  onChanged: (val) {
+                                    addressController.address.value = (addressController.address.value ?? const Address()).copyWith(
+                                      floor: val,
+                                    );
+                                  },
                                 ),
                                 SizedBox(
                                   height: Insets.xs,
@@ -146,6 +157,9 @@ class _AddressDialogState extends State<AddressDialog> {
                                   selectedTower: selectedTower,
                                   hintText: Strings.towerBlock,
                                   onChanged: (tower) {
+                                    addressController.address.value = (addressController.address.value ?? const Address()).copyWith(
+                                      tower: tower.towerName,
+                                    );
                                     if (mounted) {
                                       setState(() {
                                         selectedTower = tower;
@@ -159,6 +173,10 @@ class _AddressDialogState extends State<AddressDialog> {
                           SizedBox(height: Insets.xl),
                           InkWell(
                             onTap: () async {
+                              await addressController.creatNewAddress(
+                                customerId:
+                                    createOrderController.user.value!.id!,
+                              );
                               Get.back();
                               showDialog(
                                 context: context,

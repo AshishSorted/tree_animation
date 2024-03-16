@@ -54,27 +54,23 @@ class CreateOrderController extends GetxController {
   Future<void> addInventory(
       InventoryResponseModel inventory,
       ) async {
-    if (addedInventories.any((e) => inventory.skuCode == e.skuCode)) {
-      await removeInventory(inventory);
-    }
-    if (inventory.selectedQuantity.value > 0) {
+    // if (addedInventories.any((e) => inventory.skuCode == e.skuCode)) {
+    //   await removeInventory(inventory);
+    // }
+    // if (inventory.selectedQuantity.value > 0) {
       await addToCart(
         CartRequest(
           skuCode: inventory.skuCode,
           channel: "Backoffice",
-          pieceQty: inventory.product?.enablePiecesRequest == true
-              ? (inventory.grades ?? []).isEmpty
-              ? inventory.selectedQuantity.value.toInt()
-              : inventory.grades!
-              .map((e) => e.pieces ?? 0)
-              .reduce((value, element) => value + element)
-              .toInt()
-              : null,
-          quantity: inventory.product?.enablePiecesRequest == true &&
-              (inventory.grades == null || inventory.grades!.isEmpty)
-              ? getThreeDecimal(inventory.product!.perPcsWeight! *
-              inventory.selectedQuantity.value)
-              : getThreeDecimal(inventory.selectedQuantity.value),
+          // pieceQty: inventory.product?.enablePiecesRequest == true
+          //     ? (inventory.grades ?? []).isEmpty
+          //     ? inventory.selectedQuantity.value.toInt()
+          //     : inventory.grades!
+          //     .map((e) => e.pieces ?? 0)
+          //     .reduce((value, element) => value + element)
+          //     .toInt()
+          //     : null,
+          quantity: 1,
           slotId: selectedSlot.value?.id?.toInt(),
           addressId: address.value?.id?.toString(),
           notes: inventory.notesValue.value.isNotEmpty
@@ -123,9 +119,10 @@ class CreateOrderController extends GetxController {
       // } else {
       //   logger.e("Adding item error: $err");
       // }
-    } else {
-      removeInventory(inventory);
-    }
+    // }
+    // else {
+    //   removeInventory(inventory);
+    // }
   }
 
   double getThreeDecimal(double value) {
