@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -100,131 +101,134 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
         await showDialog(
           context: context,
           builder: (BuildContext context) {
-            return Center(
-              child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
-                  width: Get.width * 0.8,
-                  // height: Get.height * 0.6,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: Insets.xxl, horizontal: 23),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            // height: Get.height * .6,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: const [
-                                BoxShadow(
-                                  offset: Offset(1, 4),
-                                  blurRadius: 21,
-                                  color: Color.fromRGBO(0, 0, 0, 0.16),
-                                )
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(Insets.xl),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      child: Column(
-                                    children: [
-                                      Text(
-                                        "Congratulations",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyles.title2.copyWith(
-                                          fontFamily: "JD",
-                                          fontSize: 24,
-                                          color: AppTheme.darkYellow,
-                                          fontWeight: FontWeight.w600,
+            return BackdropFilter(
+                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Center(
+                child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    width: Get.width * 0.8,
+                    // height: Get.height * 0.6,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: Insets.xxl, horizontal: 23),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              // height: Get.height * .6,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(1, 4),
+                                    blurRadius: 21,
+                                    color: Color.fromRGBO(0, 0, 0, 0.16),
+                                  )
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(Insets.xl),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        child: Column(
+                                      children: [
+                                        Text(
+                                          "Congratulations",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyles.title2.copyWith(
+                                            fontFamily: "JD",
+                                            fontSize: 24,
+                                            color: AppTheme.darkYellow,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "You've won",
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "You've won",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyles.title2.copyWith(
+                                            fontFamily: "JD",
+                                            fontSize: 16,
+                                            color: AppTheme.greyB5B5B5,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: Insets.lg,
+                                        ),
+                                        Image.asset(
+                                          'assets/images/${fruit.name.toLowerCase()}.png',
+                                          width: 100,
+                                          height: 100,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Center(
+                                          child: Text(
+                                            "1 kg ${fruit.name} as complimentory gift",
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                    SizedBox(
+                                      height: Insets.xl,
+                                    ),
+                                    InkWell(
+                                      onTap: () async {},
+                                      child: Text(
+                                        "Yay!",
                                         textAlign: TextAlign.center,
                                         style: TextStyles.title2.copyWith(
-                                          fontFamily: "JD",
-                                          fontSize: 16,
-                                          color: AppTheme.greyB5B5B5,
+                                          fontSize: 20,
+                                          color: AppTheme.green518216,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: Insets.lg,
-                                      ),
-                                      Image.asset(
-                                        'assets/images/${fruit.name.toLowerCase()}.png',
-                                        width: 100,
-                                        height: 100,
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Center(
-                                        child: Text(
-                                          "1 kg ${fruit.name} as complimentory gift",
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                                  SizedBox(
-                                    height: Insets.xl,
-                                  ),
-                                  InkWell(
-                                    onTap: () async {},
-                                    child: Text(
-                                      "Yay!",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyles.title2.copyWith(
-                                        fontSize: 20,
-                                        color: AppTheme.green518216,
-                                        fontWeight: FontWeight.w400,
-                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 23,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppTheme.grey595959,
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                                size: 35,
+                            const SizedBox(
+                              height: 23,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppTheme.grey595959,
+                                ),
+                                child: const Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
             );
           },
         );

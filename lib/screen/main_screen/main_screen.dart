@@ -52,19 +52,7 @@ class _MainScreenState extends State<MainScreen> {
               fit: BoxFit.contain,
             ),
           ),
-          Positioned(
-              left: 100,
-              child: GestureDetector(
-                onTap: () {
-                  ShowAlertDialog.showAlertDialog(
-                      context, const SelectSocietyDialog());
-                },
-                child: Container(
-                  width: 100,
-                  height: 40,
-                  color: AppTheme.primaryColor1,
-                ),
-              )),
+        
           const FruitListWidget(pos: 400),
           const FruitListWidget(pos: 430),
           const FruitListWidget(pos: 450),
