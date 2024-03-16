@@ -10,6 +10,8 @@ import 'package:tree_animation/common/themes.dart';
 import 'package:tree_animation/screen/main_screen/address_controller.dart';
 import 'package:tree_animation/screen/main_screen/create_order_controller.dart';
 import 'package:tree_animation/screen/main_screen/inventory_controller.dart';
+import 'package:tree_animation/screen/main_screen/model/inventory.dart';
+import 'package:tree_animation/screen/main_screen/model/inventory_list_response_model.dart';
 
 class Fruit {
   final String name;
@@ -45,7 +47,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
 
   CreateOrderController createOrderController = Get.find();
   int activeFruit = 0;
-  late List<Fruit> fruits;
+  late List<InventoryResponseModel> fruits;
 
   @override
   void initState() {
@@ -73,13 +75,14 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {}
     });
 
-    fruits = [
-      Fruit('Apple', widget.pos),
-      Fruit('Pear', widget.pos),
-      Fruit('Lemon', widget.pos),
-      Fruit('Mango', widget.pos),
-      Fruit('Strawberry', widget.pos),
-    ];
+    // fruits = [
+    //   Fruit('Apple', widget.pos),
+    //   Fruit('Pear', widget.pos),
+    //   Fruit('Lemon', widget.pos),
+    //   Fruit('Mango', widget.pos),
+    //   Fruit('Strawberry', widget.pos),
+    // ];
+    fruits = inventoryController.inventories.sublist(0,5);
 
     super.initState();
   }

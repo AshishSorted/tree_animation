@@ -9,6 +9,13 @@ class Strings {
   static const String hintTextPin = 'Enter Pin';
   static const String enterAmount = 'Enter Amount';
   static const String rupees = '₹';
+    static const String flat = "Flat / House / Unit : ";
+  static const String flatVilla = "Flat/Villa";
+  static const String tower = "Tower / Street : ";
+  static const String towerBlock = "Tower/Block";
+  static const String society = "Society / Block : ";
+  static const String city = "City : ";
+  static const String sector = "Sector / Area : ";
   static const String enterStatement = 'Enter Statement';
   static const String selectSlot = 'Select Slot';
   static const String someThingWentWrong =
@@ -143,7 +150,7 @@ class Strings {
   static const String attachment = 'Attachment';
   static const String address = 'Address';
   static const String street = 'Street';
-  static const String tower = 'Tower';
+
   static const String house = 'House';
   static const String houseAndFlat = 'House/Flat No.';
   static const String bdamName = 'BD/AM Name: ';
@@ -202,7 +209,7 @@ class Strings {
   static const String viewCashCollection = 'View Cash Collections';
   static const String viewConsumerCashCollection = 'View Consumer CC';
   static const String isUnloadingReqd = 'Is Unloading Reqd';
-  static const String city = 'City';
+
   static const String country = 'Country';
   static const String state = 'State';
   static const String upiId = 'UpiId';
@@ -269,7 +276,7 @@ class Strings {
 
   static const String selectUserAddress = 'Select a user address';
   static const String landmark = 'Landmark';
-  static const String sector = 'Sector';
+  
   static const String floor = 'Floor';
   static const String logout = 'Logout';
   static const String orderDetail = 'Order Detail';
