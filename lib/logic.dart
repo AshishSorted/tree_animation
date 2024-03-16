@@ -53,17 +53,13 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     Random random = Random();
     List<int> numbers = [];
 
-    // Generate the first random number
-    int firstNumber =
-        random.nextInt(1000); // Adjust the upper bound as per your requirement
+    int firstNumber = random.nextInt(400);
     numbers.add(firstNumber);
 
-    // Generate the rest of the numbers
     while (numbers.length < count) {
-      int newNumber = firstNumber + 40; // Ensure difference of 40
+      int newNumber = firstNumber + 40;
       while (numbers.contains(newNumber)) {
-        newNumber =
-            (newNumber + 40 + random.nextInt(100)) % 1000; // Adjust upper bound
+        newNumber = (newNumber + 40 + random.nextInt(100)) % 1000;
       }
       numbers.add(newNumber);
       firstNumber = newNumber;
@@ -80,7 +76,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
 
     fruits = inventoryController.inventories.sublist(0, 5);
 
-    randomNumbers = generateRandomNumbers(10);
+    randomNumbers = generateRandomNumbers(6);
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -205,14 +201,15 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                                         //   height: 100,
                                         // ),
                                         Obx(() {
-                                            return Image.network(
-                                              inventoryController.cdnUrl.value + (fruit.product?.imageUrl.toString() ??
-                                                  ""),
-                                              height: 100,
-                                              width: 100,
-                                            );
-                                          }
-                                        ),
+                                          return Image.network(
+                                            inventoryController.cdnUrl.value +
+                                                (fruit.product?.imageUrl
+                                                        .toString() ??
+                                                    ""),
+                                            height: 100,
+                                            width: 100,
+                                          );
+                                        }),
                                         const SizedBox(height: 20),
                                         Center(
                                           child: Text(
@@ -282,7 +279,10 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: generateRandomNumbers(1)[0].toDouble(),
+      // bottom: fruits[activeFruit].pos,
+      // bottom: generateRandomNumbers(1)[0].toDouble(),
+      bottom: 400,
+
       left: randomNumbers[activeFruit].toDouble(),
       // fruits[activeFruit].pos == 400
       //     ? 300
@@ -307,15 +307,15 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
               },
               child: SlideTransition(
                 position: _animation,
-                child: Obx(
-                        () {
-                    return Image.network(
-                      inventoryController.cdnUrl.value + (fruits[activeFruit].product?.imageUrl.toString() ?? ""),
-                      width: 50,
-                      height: 50,
-                    );
-                  }
-                ),
+                child: Obx(() {
+                  return Image.network(
+                    inventoryController.cdnUrl.value +
+                        (fruits[activeFruit].product?.imageUrl.toString() ??
+                            ""),
+                    width: 50,
+                    height: 50,
+                  );
+                }),
               ),
             ),
           ),
