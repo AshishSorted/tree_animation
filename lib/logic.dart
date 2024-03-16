@@ -11,7 +11,6 @@ import 'package:tree_animation/screen/main_screen/address_controller.dart';
 import 'package:tree_animation/screen/main_screen/create_order_controller.dart';
 import 'package:tree_animation/screen/main_screen/inventory_controller.dart';
 import 'package:tree_animation/screen/main_screen/model/inventory.dart';
-import 'package:tree_animation/screen/main_screen/model/inventory_list_response_model.dart';
 
 class Fruit {
   final String name;
@@ -48,6 +47,32 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   CreateOrderController createOrderController = Get.find();
   int activeFruit = 0;
   late List<InventoryResponseModel> fruits;
+  List<int> generateRandomNumbers(int count) {
+    if (count <= 0) return [];
+
+    Random random = Random();
+    List<int> numbers = [];
+
+    // Generate the first random number
+    int firstNumber =
+        random.nextInt(1000); // Adjust the upper bound as per your requirement
+    numbers.add(firstNumber);
+
+    // Generate the rest of the numbers
+    while (numbers.length < count) {
+      int newNumber = firstNumber + 40; // Ensure difference of 40
+      while (numbers.contains(newNumber)) {
+        newNumber =
+            (newNumber + 40 + random.nextInt(100)) % 1000; // Adjust upper bound
+      }
+      numbers.add(newNumber);
+      firstNumber = newNumber;
+    }
+
+    return numbers;
+  }
+
+  List<int> randomNumbers = [];
 
   @override
   void initState() {
@@ -82,8 +107,8 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     //   Fruit('Mango', widget.pos),
     //   Fruit('Strawberry', widget.pos),
     // ];
-    fruits = inventoryController.inventories.sublist(0,5);
-
+    fruits = inventoryController.inventories.sublist(0, 5);
+    randomNumbers = generateRandomNumbers(10);
     super.initState();
   }
 
@@ -94,7 +119,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _animateFruitFall(Fruit fruit) async {
+  void _animateFruitFall(InventoryResponseModel fruit) async {
     _controller.forward().then((_) {
       _controller.reverse().then((_) {});
     });
@@ -105,7 +130,7 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
           context: context,
           builder: (BuildContext context) {
             return BackdropFilter(
-                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Center(
                 child: AnimatedContainer(
                     duration: const Duration(milliseconds: 500),
@@ -170,15 +195,18 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
                                         SizedBox(
                                           height: Insets.lg,
                                         ),
-                                        Image.asset(
-                                          'assets/images/${fruit.name.toLowerCase()}.png',
-                                          width: 100,
-                                          height: 100,
-                                        ),
+                                        // Image.asset(
+                                        //   'assets/images/${fruit.name.toLowerCase()}.png',
+                                        //   width: 100,
+                                        //   height: 100,
+                                        // ),
+                                        Image.network(fruit.product?.imageUrl
+                                                .toString() ??
+                                            "", height: 100, width: 100,),
                                         const SizedBox(height: 20),
                                         Center(
                                           child: Text(
-                                            "1 kg ${fruit.name} as complimentory gift",
+                                            "1 kg ${fruit.product?.name} as complimentory gift",
                                             style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black,
@@ -244,16 +272,17 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: fruits[activeFruit].pos,
-      left: fruits[activeFruit].pos == 400
-          ? 300
-          : fruits[activeFruit].pos == 430
-              ? 60
-              : fruits[activeFruit].pos == 450
-                  ? 250
-                  : fruits[activeFruit].pos == 460
-                      ? 120
-                      : 200,
+      bottom: generateRandomNumbers(1)[0].toDouble(),
+      left: randomNumbers[activeFruit].toDouble(),
+      // fruits[activeFruit].pos == 400
+      //     ? 300
+      //     : fruits[activeFruit].pos == 430
+      //         ? 60
+      //         : fruits[activeFruit].pos == 450
+      //             ? 250
+      //             : fruits[activeFruit].pos == 460
+      //                 ? 120
+      //                 : 200,
       child: AnimatedContainer(
         duration: const Duration(seconds: 1),
         child: FadeTransition(
@@ -268,8 +297,8 @@ class _FruitListState extends State<FruitList> with TickerProviderStateMixin {
               },
               child: SlideTransition(
                 position: _animation,
-                child: Image.asset(
-                  'assets/images/${fruits[activeFruit].name.toLowerCase()}.png',
+                child: Image.network(
+                  fruits[activeFruit].product?.imageUrl.toString() ?? "",
                   width: 50,
                   height: 50,
                 ),
